@@ -1,0 +1,12 @@
+import ApiError from "../errors/ApiError.js";
+
+export default function (err, req, res, next) {
+    console.error(err);
+
+    if (err instanceof ApiError) {
+        return res.status(err.statusCode).json({ message: err.message });
+    }
+
+    return res.status(500).json({ message: 'Непредвиденная ошибка на сервере' });
+
+}
