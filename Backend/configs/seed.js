@@ -15,3 +15,13 @@ await models.Clinic.findOrCreate({
         address: 'Свободина 9'
     }
 });
+
+await models.Service.findOrCreate({
+    where: {
+        name: '1',
+        description: '1',
+        price: '1.11',
+        image: '1',
+        isActive: true
+    }
+})

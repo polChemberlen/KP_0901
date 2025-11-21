@@ -57,7 +57,7 @@ class BreedService {
         const breed = await BreedRepository.findById(id);
 
         if (!breed) {
-            throw ApiError.notFound('Порода не найден');
+            throw ApiError.notFound('Порода не найдена');
         }
 
         return BreedRepository.delete(id);

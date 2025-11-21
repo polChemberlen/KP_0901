@@ -5,10 +5,10 @@ import checkRoleMiddleware from "../middlewares/checkRoleMiddleware.js";
 
 const router = new express.Router();
 
-router.post('/', authMiddleware, checkRoleMiddleware('ADMIN'), PetController.createOnePet);
+router.post('/', authMiddleware, PetController.createOnePet);
 
-router.put('/:id', authMiddleware, checkRoleMiddleware('ADMIN'), PetController.updateOnePet);
-router.delete('/:id', authMiddleware, checkRoleMiddleware('ADMIN'), PetController.deleteOnePet);
+router.put('/:id', authMiddleware, PetController.updateOnePet);
+router.delete('/:id', authMiddleware, PetController.deleteOnePet);
 
 router.get('/', PetController.getPets);
 router.get('/:id', PetController.getOnePet);
