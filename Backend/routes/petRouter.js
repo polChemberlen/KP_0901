@@ -7,6 +7,7 @@ const router = new express.Router();
 
 router.post('/', authMiddleware, PetController.createOnePet);
 
+router.get('/my', authMiddleware, PetController.getUserPets);
 router.put('/:id', authMiddleware, PetController.updateOnePet);
 router.delete('/:id', authMiddleware, PetController.deleteOnePet);
 

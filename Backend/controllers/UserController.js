@@ -1,3 +1,4 @@
+import ApiError from '../errors/ApiError.js'
 import UserService from '../services/UserService.js';
 import TokenService from '../services/tokenService.js';
 
@@ -11,18 +12,38 @@ class UserController {
         }
     }
 
-     async check(req, res, next) {
+    async check(req, res, next) {
         try {
-            const { id, email, roleId } = req.user;
+            const { id } = req.user;
 
-            const token = TokenService.generateToken({ id, email, roleId });
-            
-            return res.json({ token, user: { id, email, roleId } });
+            // Получаем полные данные пользователя (с ролью, без пароля)
+            const user = await UserService.getUserById(id);
 
+            if (!user) {
+                return next(ApiError.notFound('Пользователь не найден'));
+            }
+
+            const token = TokenService.generateToken({
+                id: user.id,
+                email: user.email,
+                role: user.role
+            });
+
+            return res.json({
+                token,
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    role: user.role
+                }
+            });
         } catch (e) {
             next(ApiError.internal('Ошибка при проверке авторизации'));
         }
     }
+
 
     async getOneUser(req, res, next) {
         try {
@@ -67,10 +88,6 @@ class UserController {
     async deleteOneUser(req, res, next) {
         try {
             await UserService.deleteUser(req.params.id);
-
-            //204 (ноу контент) - в ответе тела только заголовки, 
-            // используется как раз при удалении
-            // также не используется res.status(204).json(); только res.status(204).send();
             res.status(204).send();
         } catch (e) {
             next(e);

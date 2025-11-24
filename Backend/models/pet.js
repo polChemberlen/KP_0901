@@ -52,7 +52,7 @@ const Breed = sequelize.define('Breed',
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         speciesId: {
             type: DataTypes.INTEGER,
@@ -65,52 +65,54 @@ const Breed = sequelize.define('Breed',
     }
 );
 
-const Pet = sequelize.define('Pet',
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        age: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        weight: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: User,
-                key: 'id'
-            }
-        },
-        animalTypeId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: AnimalType,
-                key: 'id'
-            }
-        },
-        breedId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: Breed,
-                key: 'id'
-            }
+const Pet = sequelize.define('Pet', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    age: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    weight: {
+        type: DataTypes.DECIMAL(5, 2),
+        allowNull: true
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: User,
+            key: 'id'
         }
-
+    },
+    animalTypeId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: AnimalType,
+            key: 'id'
+        }
+    },
+    breedId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: Breed,
+            key: 'id'
+        }
+    },
+    customBreed: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
-);
+});
+
 
 //вид животного
 AnimalType.belongsTo(Species, {

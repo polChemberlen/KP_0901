@@ -60,7 +60,7 @@ const Clinic = sequelize.define('Clinic',
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
+            unique: true,
         },
         address: {
             type: DataTypes.STRING,
@@ -94,11 +94,11 @@ const Appointment = sequelize.define('Appointment',
         },
         appointmentDateTime: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true
         },
         clinicId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: Clinic,
                 key: 'id'
@@ -106,11 +106,12 @@ const Appointment = sequelize.define('Appointment',
         },
         totalCost: {
             type: DataTypes.DECIMAL(10, 2),
-            allowNull: false
+            allowNull: true
         },
         statusId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 1,
             references: {
                 model: Status,
                 key: 'id'

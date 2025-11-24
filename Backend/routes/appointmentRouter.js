@@ -5,7 +5,7 @@ import checkRoleMiddleware from "../middlewares/checkRoleMiddleware.js";
 
 const router = new express.Router();
 
-router.post('/', authMiddleware, checkRoleMiddleware('ADMIN'), AppointmentController.createOneAppointment);
+router.post('/', authMiddleware, AppointmentController.createOneAppointment);
 
 router.put('/:id', authMiddleware, checkRoleMiddleware('ADMIN'), AppointmentController.updateOneAppointment);
 router.delete('/:id', authMiddleware, checkRoleMiddleware('ADMIN'), AppointmentController.deleteOneAppointment);

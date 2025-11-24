@@ -15,9 +15,11 @@ class AppointmentService {
     }
 
     async createAppointment(appointmentData) {
-        const { appointmentDateTime, totalCost } = appointmentData;
-        if (!appointmentDateTime || !totalCost) {
-            throw ApiError.badRequest('Заполнены не все поля');
+        // ИСПРАВЛЕННАЯ ВАЛИДАЦИЯ - проверяем поля из формы записи
+        const { name, phone, animalTypeId } = appointmentData;
+        
+        if (!name || !phone || !animalTypeId) {
+            throw ApiError.badRequest('Заполнены не все обязательные поля (имя, телефон, тип животного)');
         }
 
         const newAppointment = await AppointmentRepository.create(appointmentData);
